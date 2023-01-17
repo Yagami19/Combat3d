@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 
 public class StateManager : MonoBehaviour
 {
-     public GameObject pause;
+    public GameObject pause;
     public bool isPaused;
     public GameObject Player;
     public GameObject Opp;
@@ -26,26 +26,18 @@ public class StateManager : MonoBehaviour
 
     void Update()
     {
-
-
         if (Input.GetButtonUp("Cancel"))
         {
-
             if (isPaused == false)
-            {
-                
+            {         
                 PauseGame();
                 isPaused = true;
             }
             else
-
             {
                 if (isPaused == true)
                 {
-
                     ContinueGame();
-                    
-                    
                 }
             }
         }

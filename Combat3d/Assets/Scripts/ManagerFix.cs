@@ -7,67 +7,43 @@ using UnityEngine.UI;
 
 public class ManagerFix : MonoBehaviour
 {
-
-    public void PlayGame() // loads game
+    //Load game
+    public void PlayGame() 
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
-
     }
 
-
-    // quits game
-
+    //Quit game game
     public void QuitGame()
     {
         Debug.Log("quit");
         Application.Quit();
     }
 
-
-
-
-
-   
-    
-
-
     //set fullscreen settings
-
-
     public void SetFullscreen(bool isFullscreen)
     {
         bool FullscreenValue = isFullscreen;
-
         Screen.fullScreen = FullscreenValue;
-
         if (FullscreenValue == true)
         {
             isFullscreenValue = 1;
-
         }
-
         else
         {
             isFullscreenValue = 0;
         }
         PlayerPrefs.SetInt("isFullscreen", isFullscreenValue);
-
     }
-
-
     //resolution settings
 
     Resolution[] resolutions;
     public Dropdown resolutionDropdown;
     int isFullscreenValue;
-   
-
-
     //method that sets fullscreen on start
     public Toggle FullscreenToggle;
     public void FullscreenStart()
     {
-
         if (isFullscreenValue == 0)
         {
             Screen.fullScreen = false;
@@ -78,45 +54,26 @@ public class ManagerFix : MonoBehaviour
             Screen.fullScreen = true;
             FullscreenToggle.isOn = true;
         }
-
     }
-
-
-   
-
-
 
     public void SetResolutionStart()
     {
        int ResolutionIndexValue1 = PlayerPrefs.GetInt("ResolutionIndex");
-
         Resolution resolution1 = resolutions[ResolutionIndexValue1];
         Screen.SetResolution(resolution1.width, resolution1.height, Screen.fullScreen);
-        
-
     }
-
-
 
     // START METHOD HERE
 
     public int ResolutionIndexValue;
     void Start()
     {
-
         isFullscreenValue = PlayerPrefs.GetInt("isFullscreen");
         ResolutionIndexValue = PlayerPrefs.GetInt("ResolutionIndex");
-        
-
         FullscreenStart();
-
-
-
-
         //getting resolution options at starting the scene
         resolutions = Screen.resolutions;
         resolutionDropdown.ClearOptions();
-
         List<string> options = new List<string>();
         int currentResolutionIndex = 0;
         for (int i = 0; i < resolutions.Length; i++)
@@ -130,29 +87,18 @@ public class ManagerFix : MonoBehaviour
                 currentResolutionIndex = i;
             }
         }
-
         resolutionDropdown.AddOptions(options);
         resolutionDropdown.value = currentResolutionIndex;
         resolutionDropdown.RefreshShownValue();
-
         SetResolutionStart();
-
     }
 
-    
+    //Setting resolution
     public void SetResolution(int resolutionIndex)
     {
         Resolution resolution = resolutions[resolutionIndex];
         Screen.SetResolution(resolution.width, resolution.height, Screen.fullScreen);
         PlayerPrefs.SetInt("ResolutionIndex", resolutionIndex);
         ResolutionIndexValue = resolutionIndex;
-
-
     }
-
-
-
-
-
-
 }

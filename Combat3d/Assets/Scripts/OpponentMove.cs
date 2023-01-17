@@ -13,21 +13,10 @@ public class OpponentMove : MonoBehaviour {
     public GameObject spawner;
     public GameObject projectileClone = null;
 
-
-
-
-
     //setting score of player
     public Text P1Score;
     public int P1ScoreValue;
-
     public Transform target;
-
-
-
-
-
-
 
     void OnCollisionEnter(Collision other)
     {
@@ -35,66 +24,21 @@ public class OpponentMove : MonoBehaviour {
         {
             P1ScoreValue++;
             P1Score.text = " " + P1ScoreValue;
-
-
         }
-
-
-
-    }
-
-   
-
-
-
-
-
-
-    // Use this for initialization
-    void Start () {
- 
-
-
-
 
     }
 
     // targeting player
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     public float cooldownTime = 1;
     private float nextFireTime = 0;
-  
 
    private float nextRotationTime = 0;
     private float nextRotationTimeSetup = 0;
 
-
-
-
     // Update is called once per frame
     void Update () {
 
-        // jezeli obecny czas < czasu potrzebnego na rotacje to rotuj
-
-        
-        
-
+        // if current time < time to rotate, then rotate towards player
 
         if (Time.time == nextRotationTimeSetup)
             nextRotationTime = Time.time + 2.5f;
@@ -102,99 +46,50 @@ public class OpponentMove : MonoBehaviour {
         int x = Random.Range(-1, 1);
         {
             if (Time.time < nextRotationTime)
-
-
             {
                 transform.Rotate(2.5f*x, 0.0f, 0.0f);
-                
-                
-
             }
 
             nextRotationTimeSetup = Time.time + 2.5f;
         }
-
-
-
         //defining ray 
         RaycastHit hit;
-               Vector3 forward = transform.TransformDirection(Vector3.forward);
-
-        
-
-
-
-
-
-            //add cooldown, add randomizer rotation
-
-            Ray collisionRay = new Ray(this.transform.position, forward);
-
+        Vector3 forward = transform.TransformDirection(Vector3.forward);
+       //add cooldown, add randomizer rotation
+        Ray collisionRay = new Ray(this.transform.position, forward);
         if (Physics.Raycast(collisionRay, out hit, 30))
-        {
-            
+        {         
             if(hit.collider.tag == "wall")
             {
-
-               
-
                 transform.Rotate(0.0f, 2.5f, 0.0f);
-
               //  Debug.Log("hit");
             }
         }
 
-
+        //Shooting when looking at player
         if (Physics.Raycast(collisionRay, out hit, 250))
         {
-
             if (hit.collider.tag == "PlayerBody")
             {
                 if (Time.time > nextFireTime)
 
                 {
-
                     nextFireTime = Time.time + cooldownTime;
-
                     projectileClone = Instantiate(projectile, spawner.transform.position, spawner.transform.rotation);
                     projectileClone.GetComponent<Rigidbody>().AddForce(spawner.transform.forward * 5000);
                     Destroy(projectileClone, 5.0f);
-
-
-
-
                 }
             }
-
         }
-
-
-
         transform.position += transform.forward * Time.deltaTime * 15;
-
-
-
-
-
     }
 
+    //Firing with cooldown
     void OnTriggerStay(Collider other)
-
     {
-
         if (other.gameObject.tag == "PlayerBox" && Time.time > nextFireTime)
         {
             transform.LookAt(target);
-
-
         }
-
-
-
-
-
     }
-
-
-
 }

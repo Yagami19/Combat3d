@@ -9,8 +9,6 @@ public class DestroyProjectileOpponent : MonoBehaviour
         if (other.gameObject.tag == "PlayerBody")
         {
             Destroy(this.gameObject, 0.01f);
-
-
         }
     }
 }
