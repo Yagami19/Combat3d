@@ -1,1 +1,1 @@
-Project showcases game called Combat from 1977 made in 3d. There is one test level available.
+Projekt przedstawia grê combat z 1977 roku przeniesion¹ w œwiat 3d. Dostêpny jest jeden poziom testowy.
